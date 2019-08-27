@@ -18,6 +18,44 @@
   the container running in the background. 
   The -p flag redirects a public port to 
   a private port inside the container.
-
 # login from terminal                                  docker login
 # tag the image                                        docker tag <IMAGE> <USERNAME>/<REPO NAME>:<TAG>
+
+
+
+
+# to enable swarm mode and it current                  docker swarm init
+  machine SWARM MANAGER
+# to deploy docker-compose file and run                docker stack deploy -c docker-compose.yml <GIVE APP NAME HERE>
+  multiple docker container as specified
+  in the docker-compose file
+# to get the service ID, that is, running               docker service ls   OR  docker stack services getstartedlab
+  multiple instances
+# to list the task (container) that is                  docker service ps <SERVICE NAME >   OR docker stack ps <APP NAME>
+  running inside a service
+# to take the app down                                  docker stack rm <APP NAME>
+# to take the swarm down                                docker swarm leave --force
+
+# to join swarm as worker                               docker swarm join
+
+
+
+
+
+
+        ----- ####   ONLY THE SWARM MANAGER CAN EXECUTES THE DOCKER COMMANDS AND WORKERS ARE ONLY FOR CAPACITY    #### ------
+
+------------------------------- DOCKER MACHINE ----------------------------------------------
+
+# to create a virtual machine (hypervisor is needed)        docker-machine create --driver virtualbox <VM NAME>
+  using docker-machine
+# to list all the virtual machine                           docker-machine ls
+# to send command to VM                                     docker-machine ssh <VM NAME> "<COMMAND>"
+# to join swarm as worker (token is returned when           docker-machine ssh myvm2 "docker swarm join --token <token> <ip>:2377"
+  we create a swarm manager)
+# to list all the nodes                                     docker-machine ssh <VM which is swarm manager (myvm1)> "docker node ls"
+# to leave the swarm (each node must perform this)          docker-machine ssh <VM NAME> "docker swarm leave --force"
+# to set a VM as default (after this all the operations     eval $(docker-machine env <VM NAME (myvm1)>)
+  are performed for that VM)                                   
+# to unsetting the shell variable                           eval $(docker-machine env -u)
+# to restart machine that has stopped                       docker-machine start <machine-name>

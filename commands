@@ -1,0 +1,23 @@
+            Description                                Command
+
+# to list out running containers                       docker ps
+#          version                                     docker --version
+#  detail about docker                                 docker info (or docker version)
+# to run a docker image                                docker run  <image>
+# to list out docker images present                    docker image ls
+    on the machine
+# list out the container                               docker container ls --all ( -all is not needed if it is still running)
+# to remove container                                  docker container rm <CONTAINER ID>
+# to remove image                                      docker image rm <IMAGE ID>
+# to build an image                                    docker build -t <IMAGE-NAME> .
+# to stop a process                                    docker container stop <CONTAINER ID>
+# to enter inside a container                          docker exec -it <CONTAINER ID> /bin/bash
+  and to view files
+# Running your image with -d runs the                  docker run -p 49160:8080 -d <APP NAME>  (49160-(public PORT) 8080-(private PORT))
+  container in detached mode, leaving
+  the container running in the background. 
+  The -p flag redirects a public port to 
+  a private port inside the container.
+
+# login from terminal                                  docker login
+# tag the image                                        docker tag <IMAGE> <USERNAME>/<REPO NAME>:<TAG>

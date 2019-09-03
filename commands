@@ -13,20 +13,20 @@
 # to stop a process                                    docker container stop <CONTAINER ID>
 # to enter inside a container                          docker exec -it <CONTAINER ID> /bin/bash
   and to view files
-# Running your image with -d runs the                  docker run -p 49160:8080 -d <APP NAME>  (49160-(public PORT) 8080-(private PORT))
+# Running your image with -d runs the                  docker run -p 49160:8080 -d <IMAGE NAME>  (49160-(public PORT) 8080-(private PORT))
   container in detached mode, leaving
   the container running in the background. 
   The -p flag redirects a public port to 
   a private port inside the container.
 # login from terminal                                  docker login
 # tag the image                                        docker tag <IMAGE> <USERNAME>/<REPO NAME>:<TAG>
+# to push image to docker HUB                          docker push username/repository:tag
 
 
-
-
-# to enable swarm mode and it current                  docker swarm init
-  machine SWARM MANAGER
-# to deploy docker-compose file and run                docker stack deploy -c docker-compose.yml <GIVE APP NAME HERE>
+                            ----------- LOAD BALANCING -----------
+# to enable swarm mode and it also make                 docker swarm init
+  current machine SWARM MANAGER
+# to deploy docker-compose file and run                 docker stack deploy -c docker-compose.yml <GIVE APP NAME HERE>
   multiple docker container as specified
   in the docker-compose file
 # to get the service ID, that is, running               docker service ls   OR  docker stack services getstartedlab
@@ -35,11 +35,7 @@
   running inside a service
 # to take the app down                                  docker stack rm <APP NAME>
 # to take the swarm down                                docker swarm leave --force
-
 # to join swarm as worker                               docker swarm join
-
-
-
 
 
 

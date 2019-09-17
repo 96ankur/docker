@@ -47,7 +47,7 @@
   using docker-machine
 # to list all the virtual machine                           docker-machine ls
 # to send command to VM                                     docker-machine ssh <VM NAME> "<COMMAND>"
-# to join swarm as worker (token is returned when           docker-machine ssh myvm2 "docker swarm join --token <token> <ip>:2377"
+# to join swarm as worker (token is returned when           docker-machine ssh myvm2 "docker swarm join --token <token> <ip>:2377"  OR "docker swarm init --advertise-addr <myvm1 ip>"
   we create a swarm manager)
 # to list all the nodes                                     docker-machine ssh <VM which is swarm manager (myvm1)> "docker node ls"
 # to leave the swarm (each node must perform this)          docker-machine ssh <VM NAME> "docker swarm leave --force"
@@ -55,3 +55,12 @@
   are performed for that VM)                                   
 # to unsetting the shell variable                           eval $(docker-machine env -u)
 # to restart machine that has stopped                       docker-machine start <machine-name>
+
+
+----------------------------> ######################################################################### <--------------------------------
+
+                                        VIRTUAL BOX COMMANDS
+
+# VBoxManage showvminfo <VM NAME>
+# VBoxManage modifyvm "<VM name>" --natpf1 "guestssh,tcp,,2222,,22"
+# VBoxManage modifyvm <VM NAME> --natpf1 delete guestssh

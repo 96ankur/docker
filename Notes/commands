@@ -1,0 +1,140 @@
+=> Create & run a docker container
+
+  docker run  <image>
+  docker run <image> <COMMAND>        (This command will be executed inside the container)
+
+  docker run = docker create + docker start
+
+  docker create <image> <COMMAND (optional)>  (This command will create a container and return the
+                                               container Id)
+  docker start -a <container_id>              (It will run the container. '-a' is going to make docker to
+                                               watch for the output from the container)
+
+  We can run a stopped container by using 
+    docker start -a <container_id>            (but we cannot add an override command, in this situtation) 
+
+=>  List out running containers
+    docker ps                             (List only the running containers)
+    docker ps -all                        (List all the containers that has ever been created)
+
+=>  Delete all the stopped container
+    docker system prune                   (Delete all the stopped container and also the download images)
+
+=>  Print logs from a container
+      docker logs <container_id>
+
+=>  Stop a container
+    docker stop <container_id>            (It will emit SIGTERM signal. Docker wait for 10 secs for the
+                                           container to stop, after that docker executs the docker kill
+                                           command)
+    
+    docker kill <container_id>            (It will emit SIGKILL signal)
+
+=>  Execute a command inside a running container
+
+    docker exec -it <CONTAINER ID> <command>    (-it allow us to type input directly into the container)
+
+    ->  -it flag is equivalent to -i -t
+    ->  -i flag allow the stuff that we type in the terminal directed to the into the running process
+    ->  -t flag format the output comming out of the running process
+
+=>  Get full terminal access inside a running container
+
+    docker exec -it <container_id> sh         (sh -> shell program)
+
+=>  To build an image from a Dockerfile
+
+    docker build .                                            ( "." defines the source of files)
+    docker build -t <Docker ID>/<Project-name>:<version> .    (-t will tag a name to the image)
+
+=>  Container port mapping
+
+     docker run -p <PORT_OF_LOCAL_NETWORK>:<PORT_INSIDE_THE_CONTAINER> <IMAGE_NAME or IMAGE_ID>
+
+    ###################################################################################################
+
+          PORT OF THE LOCAL NETWORK NEED NOT TO BE THE SAME AS OF THE PORT INSIDE THE CONTAINER
+
+    ###################################################################################################
+
+=>  Docker-compose
+
+    docker-compose up   (this will create containers for all the images mentioned docker-compose.yml file)
+    docker-compose up -d (it will start all the container in the background)
+
+    docker-compose up --build   (this will recreate the container by re-building the image)
+
+    docker-compose down  (stops all the container that had been created by the docker-compose.yml file
+                          in the current directory)
+
+    docker-compose ps    (list all the containers, by looking into the docker-compose.yml file in the
+                           current working directory)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          Description                                Command
+
+#          version                                     docker --version
+#  detail about docker                                 docker info (or docker version)
+# to list out docker images present                    docker image ls
+    on the machine
+# list out the container                               docker container ls --all ( -all is not needed if it is still running)
+# to remove container                                  docker container rm <CONTAINER ID>
+# to remove image                                      docker image rm <IMAGE ID>
+# login from terminal                                  docker login
+# to push image to docker HUB                          docker push username/repository:tag
+
+
+                            ----------- LOAD BALANCING -----------
+# to enable swarm mode and it also make                 docker swarm init
+  current machine SWARM MANAGER
+# to deploy docker-compose file and run                 docker stack deploy -c docker-compose.yml <GIVE APP NAME HERE>
+  multiple docker container as specified
+  in the docker-compose file
+# to get the service ID, that is, running               docker service ls   OR  docker stack services getstartedlab
+  multiple instances
+# to list the task (container) that is                  docker service ps <SERVICE NAME >   OR docker stack ps <APP NAME>
+  running inside a service
+# to take the app down                                  docker stack rm <APP NAME>
+# to take the swarm down                                docker swarm leave --force
+# to join swarm as worker                               docker swarm join
+
+
+
+        ----- ####   ONLY THE SWARM MANAGER CAN EXECUTES THE DOCKER COMMANDS AND WORKERS ARE ONLY FOR CAPACITY    #### ------
+
+------------------------------- DOCKER MACHINE ----------------------------------------------
+
+# to create a virtual machine (hypervisor is needed)        docker-machine create --driver virtualbox <VM NAME>
+  using docker-machine
+# to list all the virtual machine                           docker-machine ls
+# to send command to VM                                     docker-machine ssh <VM NAME> "<COMMAND>"
+# to join swarm as worker (token is returned when           docker-machine ssh myvm2 "docker swarm join --token <token> <ip>:2377"  OR "docker swarm init --advertise-addr <myvm1 ip>"
+  we create a swarm manager)
+# to list all the nodes                                     docker-machine ssh <VM which is swarm manager (myvm1)> "docker node ls"
+# to leave the swarm (each node must perform this)          docker-machine ssh <VM NAME> "docker swarm leave --force"
+# to set a VM as default (after this all the operations     eval $(docker-machine env <VM NAME (myvm1)>)
+  are performed for that VM)                                   
+# to unsetting the shell variable                           eval $(docker-machine env -u)
+# to restart machine that has stopped                       docker-machine start <machine-name>
+
+
+----------------------------> ######################################################################### <--------------------------------
+
+                                        VIRTUAL BOX COMMANDS
+
+# VBoxManage showvminfo <VM NAME>
+# VBoxManage modifyvm "<VM name>" --natpf1 "guestssh,tcp,,2222,,22"
+# VBoxManage modifyvm <VM NAME> --natpf1 delete guestssh

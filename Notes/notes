@@ -1,0 +1,87 @@
+=>  WHY USE DOCKER?
+    Docker makes it easy to install and run software without worrying about setup or dependencies.
+
+                IMAGE ------------------->  CONTAINER
+              Single file                 Runnig instance
+              with all the                 of an image.
+              deps and config
+              required to run
+              a program
+
+=> Docker software consist of two software:
+   1) Docker Client (Docker cli) - Tool that we are going to issue commands
+   2) Docker Server (Docker Daemon)- Tool that is responsible for creating images, running contrainers,etc
+
+
+=>  What happen when we execute docker run command:
+
+                                  Your computer                   Docker Hub
+                                                      __________>
+    docker run hello-world ------> Docker Client     !  !------> hello-world
+                                        !            !  !           redis
+                                   Docker Server------  !
+                                                        !
+                                    image cache         !
+                                        Hello   <-------!
+                                        world
+    
+    1)  We execute command on docker cli
+    2)  Cli then send command to docker Server
+    3)  Docker Server checks for the local cpoy of the image.
+    4)  If server found the image then it runs the image to form a container.
+    5)  Else, server download the hello-world image and store it locally for future,
+        then runs the image to form a container.
+
+=>  what is a container?
+    A container is a running program along with the portion of the computer resources required for the
+    processing.
+
+=>  When docker is installed in the windows/ mac machine then, it uses a LINUX VIRTUAL MACHINE (for 
+    Namespacing & control groups, as these are the features of Linux operation system). Then the kernel of
+    this linux virtual machine is used to perform Namespacing and control groups to run the containers, in
+    the windows/mac machine 
+
+=>  Unless and until we make a connection between two containers, they remains in complete isolation
+
+=>  Creating an Image
+    
+            Dockerfile  ----->   Docker Client  ------>  Docker Server  ------>  Usable Image
+    
+    ->  Create a dockerfile
+            1) Specify a base image                                 (Is a kind of OS in computer)
+            2) Run some commands to install additional programs     (all the steps required to download and
+                                                                     install the chrome)
+            3) Specify a command to run on container startup        (command required to start the chrome)
+    
+    ->  Example of a Dockerfile
+
+     Instruction
+    telling docker
+     server what         Argument to
+       to do            the instruction
+
+        FROM                alpine
+        RUN                 apk add --update redis       (apk is a package manager in the alpine image)
+        CMD                 ["redis-server"]
+
+    ->  how a Dockerfile is executed
+
+    1)  Docker server download the base image from docker Hub
+    2)  Then docker server find the next instruction to be RUN and picks the docker image download in the
+        previous step.
+        It then create a container for that image and execute the argument in the RUN isntruction.
+        It then download the redis in the hard-disk namespace and create a file-system snapshot, assign
+        an ID to that image and shutdown the temporary container.
+    3)  Now docker server find the next instruction to be CMD and picks the docker image download in the
+        previous step.
+        It then create a container for that image and set the command that is to be executed in the future
+        when this image will be run. Again it create a file-system snapshot, assign an ID
+        to that image and shutdown the temporary container.
+    
+
+    ###################################################################################################
+
+        Any time we make change to a Dockerfile, docker daemon will going to run only the series of
+        steps from the CHANGED LINE ON DOWN.
+
+    ###################################################################################################

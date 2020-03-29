@@ -1,9 +1,59 @@
-            Description                                Command
+=> Create & run a docker container
 
-# to list out running containers                       docker ps
+  docker run  <image>
+  docker run <image> <COMMAND>        (This command will be executed inside the container)
+
+  docker run = docker create + docker start
+
+  docker create <image> <COMMAND (optional)>  (This command will create a container and return the
+                                               container Id)
+  docker start -a <container_id>              (It will run the container. '-a' is going to make docker to
+                                               watch for the output from the container)
+
+  We can run a stopped container by using 
+    docker start -a <container_id>            (but we cannot add an override command, in this situtation) 
+
+=>  List out running containers
+    docker ps                             (List only the running containers)
+    docker ps -all                        (List all the containers that has ever been created)
+
+=>  Delete all the stopped container
+    docker system prune                   (Delete all the stopped container and also the download images)
+
+=>  Print logs from a container
+      docker logs <container_id>
+
+=>  Stop a container
+    docker stop <container_id>            (It will emit SIGTERM signal. Docker wait for 10 secs for the
+                                           container to stop, after that docker executs the docker kill
+                                           command)
+    
+    docker kill <container_id>            (It will emit SIGKILL signal)
+
+=>  Execute a command inside a running container
+
+    docker exec -it <CONTAINER ID> <command>    (-it allow us to type input directly into the container)
+
+    ->  -it flag is equivalent to -i -t
+    ->  -i flag allow the stuff that we type in the terminal directed to the into the running process
+    ->  -t flag format the output comming out of the running process
+
+=>  Get full terminal access inside a running container
+
+    docker exec -it <container_id> sh         (sh -> shell program)
+
+=>  To build an image from a Dockerfile
+
+    docker build .                                            ( "." defines the source of files)
+    docker build -t <Docker ID>/<Project-name>:<version> .    (-t will tag a name to the image)
+
+
+
+
+          Description                                Command
+
 #          version                                     docker --version
 #  detail about docker                                 docker info (or docker version)
-# to run a docker image                                docker run  <image>
 # to list out docker images present                    docker image ls
     on the machine
 # list out the container                               docker container ls --all ( -all is not needed if it is still running)
@@ -11,8 +61,7 @@
 # to remove image                                      docker image rm <IMAGE ID>
 # to build an image                                    docker build -t <IMAGE-NAME> .
 # to stop a process                                    docker container stop <CONTAINER ID>
-# to enter inside a container                          docker exec -it <CONTAINER ID> /bin/bash
-  and to view files
+
 # Running your image with -d runs the                  docker run -p 49160:8080 -d <IMAGE NAME>  (49160-(public PORT) 8080-(private PORT))
   container in detached mode, leaving
   the container running in the background. 

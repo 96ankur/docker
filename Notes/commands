@@ -47,40 +47,6 @@
     docker build .                                            ( "." defines the source of files)
     docker build -t <Docker ID>/<Project-name>:<version> .    (-t will tag a name to the image)
 
-=>  Container port mapping
-
-     docker run -p <PORT_OF_LOCAL_NETWORK>:<PORT_INSIDE_THE_CONTAINER> <IMAGE_NAME or IMAGE_ID>
-
-    ###################################################################################################
-
-          PORT OF THE LOCAL NETWORK NEED NOT TO BE THE SAME AS OF THE PORT INSIDE THE CONTAINER
-
-    ###################################################################################################
-
-=>  Docker-compose
-
-    docker-compose up   (this will create containers for all the images mentioned docker-compose.yml file)
-    docker-compose up -d (it will start all the container in the background)
-
-    docker-compose up --build   (this will recreate the container by re-building the image)
-
-    docker-compose down  (stops all the container that had been created by the docker-compose.yml file
-                          in the current directory)
-
-    docker-compose ps    (list all the containers, by looking into the docker-compose.yml file in the
-                           current working directory)
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -93,7 +59,16 @@
 # list out the container                               docker container ls --all ( -all is not needed if it is still running)
 # to remove container                                  docker container rm <CONTAINER ID>
 # to remove image                                      docker image rm <IMAGE ID>
+# to build an image                                    docker build -t <IMAGE-NAME> .
+# to stop a process                                    docker container stop <CONTAINER ID>
+
+# Running your image with -d runs the                  docker run -p 49160:8080 -d <IMAGE NAME>  (49160-(public PORT) 8080-(private PORT))
+  container in detached mode, leaving
+  the container running in the background. 
+  The -p flag redirects a public port to 
+  a private port inside the container.
 # login from terminal                                  docker login
+# tag the image                                        docker tag <IMAGE> <USERNAME>/<REPO NAME>:<TAG>
 # to push image to docker HUB                          docker push username/repository:tag
 
 

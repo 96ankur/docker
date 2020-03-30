@@ -85,6 +85,7 @@
         steps from the CHANGED LINE ON DOWN.
 
     ###################################################################################################
+<<<<<<< HEAD
 
     ###################################################################################################
 
@@ -105,3 +106,5 @@
         always            : If this container stops *for any reason* always attempt to restart it
         on-failue         : Only restart if the container stops with an error code
         unless-stopped    : always restart unless we (the developers) forciblystop it
+=======
+>>>>>>> fc7a97a4f5dee7b3e37a6a17a0a5b0aa99909aab

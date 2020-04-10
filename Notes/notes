@@ -85,7 +85,6 @@
         steps from the CHANGED LINE ON DOWN.
 
     ###################################################################################################
-<<<<<<< HEAD
 
     ###################################################################################################
 
@@ -100,11 +99,16 @@
     Purpose of docker compose is to function like docker CLI and allow us to issue multiple commands more
     quickly
 
+                            =======>  docker-compose up --build   <============
+
     =>  docker-compose restart policies
 
         "no"              : Never attempt to restart container if it stops or crashes ("" are required, because in .yml interpret no as false)
         always            : If this container stops *for any reason* always attempt to restart it
         on-failue         : Only restart if the container stops with an error code
         unless-stopped    : always restart unless we (the developers) forciblystop it
-=======
->>>>>>> fc7a97a4f5dee7b3e37a6a17a0a5b0aa99909aab
+
+=>  Docker volumes
+
+    Docker volumes map a folder inside the container to the folder outside the container (just like the
+    mapping of ports)
